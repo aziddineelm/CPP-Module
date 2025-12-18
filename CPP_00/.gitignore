@@ -1,0 +1,7 @@
+# Ignore executables in exercise directories
+ex*/[a-z]*
+!ex*/*.cpp
+!ex*/*.hpp
+!ex*/*.c
+!ex*/*.h
+!ex*/Makefile
