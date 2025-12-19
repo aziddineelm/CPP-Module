@@ -1,5 +1,7 @@
-# Ignore executables in exercise directories
-ex*/[a-z]*
+# Ignore everything in exercise directories
+ex*/*
+
+# But keep source files
 !ex*/*.cpp
 !ex*/*.hpp
 !ex*/*.c

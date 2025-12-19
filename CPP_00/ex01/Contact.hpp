@@ -1,7 +1,10 @@
 #pragma once
 
+#include <iostream>
 #include <string>
-#include 
+#include <cctype>
+#include <cstdlib>
+
 
 class Contact {
 	private:
@@ -11,6 +14,6 @@ class Contact {
 		std::string phoneNumber;
 		std::string darkSecret;
 	public:
-		void getInfo();
+		void setInfo();
 		
 };

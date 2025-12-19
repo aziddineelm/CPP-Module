@@ -10,8 +10,6 @@ int main(int ac, char **av) {
 		for (int j = 0; av[i][j]; j++) {
 			if (av[i][j] >= 'a' && av[i][j] <= 'z')
 				av[i][j] -= 32;
-			else if (av[i][j] >= 'A' && av[i][j] <= 'Z')
-				av[i][j] += 32;
 			std::cout << av[i][j];
 		}
 	}

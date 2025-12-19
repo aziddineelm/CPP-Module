@@ -2,6 +2,7 @@
 
 #include <string>
 #include <iostream>
+#include "Contact.hpp"
 
 #define RED     "\033[1;31m"
 #define GREEN   "\033[1;32m"
@@ -11,8 +12,11 @@
 
 class PhoneBook {
 	private:
-		std::string contact[8];
-		// int index;
+		Contact contact[8];
+		int index;
+		int count;
 	public:
-	
+		PhoneBook();
+		void addContact();
+		void searchContact();
 };
