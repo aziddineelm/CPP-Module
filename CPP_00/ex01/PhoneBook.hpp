@@ -2,6 +2,7 @@
 
 #include <string>
 #include <iostream>
+#include <iomanip>
 #include "Contact.hpp"
 
 #define RED     "\033[1;31m"
@@ -17,6 +18,7 @@ class PhoneBook {
 		int count;
 	public:
 		PhoneBook();
+		~PhoneBook();
 		void addContact();
 		void searchContact();
 };

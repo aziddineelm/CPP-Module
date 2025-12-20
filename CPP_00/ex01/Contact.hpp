@@ -15,5 +15,11 @@ class Contact {
 		std::string darkSecret;
 	public:
 		void setInfo();
-		
+		Contact();
+		~Contact();
+		std::string getFirstName() const;
+        std::string getLastName() const;
+        std::string getNickName() const;
+        std::string getPhoneNumber() const;
+        std::string getDarkSecret() const;
 };
