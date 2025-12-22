@@ -1,4 +1,5 @@
 #include "Contact.hpp"
+#include "PhoneBook.hpp"
 
 Contact::Contact() {}
 Contact::~Contact() {}
@@ -12,11 +13,21 @@ bool isValidNumber(const std::string &phone) {
     return true;
 }
 
-std::string getInput(const std::string &prompt, bool isRetry = false) {
+bool hasNonPrintable(const std::string &str) {
+    for (size_t i = 0; i < str.length(); i++) {
+        if (!std::isprint(static_cast<unsigned char>(str[i]))) {
+			std::cout << RED << "None Printable Detected!!" << RESET << std::endl;
+            return true;
+		}
+    }
+    return false;
+}
+
+std::string getInput(const std::string &prompt) {
 	std::string input;
 	bool firstTime = true;
-	while (input.empty()) {
-		if (firstTime && !isRetry)
+	while (input.empty() || hasNonPrintable(input)) {
+		if (firstTime)
             std::cout << "Enter " << prompt;
         else
             std::cout << "Please enter " << prompt;
@@ -40,7 +51,7 @@ void Contact::setInfo() {
 	phoneNumber = getInput("Phone number: ");
 
 	while (!isValidNumber(phoneNumber))
-		phoneNumber = getInput(" a valid phone number: ", true);
+		phoneNumber = getInput("a valid phone number: ");
 
 	darkSecret = getInput("Dark secret: ");
 
