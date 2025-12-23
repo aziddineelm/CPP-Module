@@ -9,25 +9,25 @@ CXXFLAGS	= -Wall -Wextra -Werror -std=c++98
 
 NAME		= Account
 
-SRCS		= Account.cpp test.cpp
+SRCS		= Account.cpp tests.cpp
 
 OBJS		= $(SRCS:.cpp=.o)
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
-    @$(CC) $(FLAGS) -o $(NAME) $(OBJS)
-    @echo "$(GREEN)$(NAME) compiled successfully!$(RESET)"
+	@$(CXX) $(CXXFLAGS) -o $(NAME) $(OBJS)
+	@echo "$(GREEN)$(NAME) compiled successfully!$(RESET)"
 
 %.o: %.cpp
-    @$(CC) $(FLAGS) -c $< -o $@
+	@$(CXX) $(CXXFLAGS) -c $< -o $@
 
 clean:
-    @rm -f $(OBJS)
-    @echo "$(YELLOW)Object files cleaned$(RESET)"
+	@rm -f $(OBJS)
+	@echo "$(YELLOW)Object files cleaned$(RESET)"
 
 fclean: clean
-    @rm -f $(NAME)
-    @echo "$(RED)$(NAME) cleaned successfully!$(RESET)"
+	@rm -f $(NAME)
+	@echo "$(RED)$(NAME) cleaned successfully!$(RESET)"
 
 re: fclean all
