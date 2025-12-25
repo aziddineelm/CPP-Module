@@ -1,0 +1,13 @@
+# 1. Ignore everything in the project
+*
+
+# 2. Keep all directories (so git looks inside CPP_00, ex00, etc.)
+!*/
+
+# 3. Whitelist (keep) the specific files you want
+!*.cpp
+!*.hpp
+!*.c
+!*.h
+!Makefile
+!.gitignore

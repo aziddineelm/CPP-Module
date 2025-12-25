@@ -1,9 +1,0 @@
-# Ignore everything in exercise directories
-ex*/*
-
-# But keep source files
-!ex*/*.cpp
-!ex*/*.hpp
-!ex*/*.c
-!ex*/*.h
-!ex*/Makefile
