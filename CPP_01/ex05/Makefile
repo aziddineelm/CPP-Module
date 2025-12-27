@@ -7,7 +7,7 @@ CXX 		= c++
 
 CXXFLAGS	= -Wall -Wextra -Werror -std=c++98
 
-NAME 		= Harl
+NAME 		= harl
 
 SRCS 		= main.cpp Harl.cpp
 
