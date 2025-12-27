@@ -2,13 +2,14 @@
 
 int main(int ac, char** av) {
 	if (ac != 2) {
-		std::cerr << "Usage: ./harlFilter <level>" << std::endl;
+		std::cerr << "		***		Error: You must add <level> 	***" << std::endl;
+		std::cout << "		*** 	[\"WARNING\", \"DEBUG\", \"ERROR\", \"INFO\"]	 ***" << std::endl;
 		return 1;
 	}
 	
 	Harl harl;
 	std::string level = av[1];
-	int levelIndex = -1;
+	int levelIndex;
 	
 	std::string levels[] = {"DEBUG", "INFO", "WARNING", "ERROR"};
 	
@@ -16,19 +17,23 @@ int main(int ac, char** av) {
 		if (levels[i] == level) {
 			levelIndex = i;
 			break;
-		}
+		} else 
+			levelIndex = -1;
 	}
 	
 	switch (levelIndex) {
 		case 0:
 			harl.complain("DEBUG");
 			std::cout << std::endl;
+			// fallthrough
 		case 1:
 			harl.complain("INFO");
 			std::cout << std::endl;
+			// fallthrough
 		case 2:
 			harl.complain("WARNING");
 			std::cout << std::endl;
+			// fallthrough
 		case 3:
 			harl.complain("ERROR");
 			std::cout << std::endl;
