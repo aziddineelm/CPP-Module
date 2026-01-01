@@ -1,6 +1,5 @@
 # 1. Ignore everything in the project
 *
-
 # 2. Keep all directories (so git looks inside CPP_00, ex00, etc.)
 !*/
 
@@ -11,3 +10,5 @@
 !*.h
 !Makefile
 !.gitignore
+!General_rules.md
+!README.md
