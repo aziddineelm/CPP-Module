@@ -74,13 +74,7 @@ void ClapTrap::beRepaired(unsigned int amount) {
 		return;
 	}
 	_EnergyPoint--;
-	if (amount > UINT_MAX - _HitPoint) {
-		_HitPoint = UINT_MAX;
-		std::cout << "ClapTrap " << _name << " heal more than expected! HP capped at " 
-			<< _HitPoint << std::endl;
-	} else {
-		_HitPoint += amount;
-		std::cout << "ClapTrap " << _name << " repairs itself for " << amount 
-			<< " hit points! (" << _HitPoint << " HP total)" << std::endl;
-	}
+	_HitPoint += amount;
+	std::cout << "ClapTrap " << _name << " repairs itself for " << amount 
+		<< " hit points! (" << _HitPoint << " HP total)" << std::endl;
 }
