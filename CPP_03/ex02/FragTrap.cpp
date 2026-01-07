@@ -30,6 +30,20 @@ FragTrap::~FragTrap() {
 	std::cout << "FragTrap " << _name << " destroyed" << std::endl;
 }
 
+void FragTrap::attack(const std::string& target) {
+	if (_HitPoint == 0) {
+		std::cout << "FragTrap " << _name << " is dead and cannot attack!" << std::endl;
+		return;
+	}
+	if (_EnergyPoint == 0) {
+		std::cout << "FragTrap " << _name << " has no energy points left!" << std::endl;
+		return;
+	}
+	_EnergyPoint--;
+	std::cout << "FragTrap " << _name << " attacks " << target 
+		<< ", causing " << _AttackDamage << " points of damage!" << std::endl;
+}
+
 void FragTrap::highFivesGuys(void) {
 	std::cout << "FragTrap " << _name << " requests a positive high five! ✋" << std::endl;
 }

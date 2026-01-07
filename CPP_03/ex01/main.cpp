@@ -2,57 +2,47 @@
 #include "ScavTrap.hpp"
 
 int main() {
-	std::cout << "=== Testing Construction/Destruction Chaining ===" << std::endl;
-	{
-		std::cout << "\n--- Creating ScavTrap ST-001 ---" << std::endl;
-		ScavTrap scav1("ST-001");
-		
-		std::cout << "\n--- Destroying ScavTrap ST-001 ---" << std::endl;
-	}
+	std::cout << "=== Test 1: ScavTrap Construction ===" << std::endl;
+	ScavTrap scav1("Guardian");
 
-	std::cout << "\n\n=== Testing ScavTrap Abilities ===" << std::endl;
-	ScavTrap scav2("ST-002");
-	
-	std::cout << "\n--- ScavTrap Attack (20 damage) ---" << std::endl;
-	scav2.attack("Enemy");
-	
-	std::cout << "\n--- Guard Gate Special Ability ---" << std::endl;
-	scav2.guardGate();
-	
-	std::cout << "\n--- ScavTrap Repair ---" << std::endl;
-	scav2.beRepaired(10);
-	
-	std::cout << "\n--- ScavTrap Take Damage ---" << std::endl;
-	scav2.takeDamage(30);
+	std::cout << "\n=== Test 2: ScavTrap Attack (20 damage) ===" << std::endl;
+	scav1.attack("intruder");
 
-	std::cout << "\n\n=== Testing ClapTrap vs ScavTrap ===" << std::endl;
-	ClapTrap clap("CT-001");
-	ScavTrap scav3("ST-003");
-	
-	std::cout << "\n--- ClapTrap Attack (0 damage) ---" << std::endl;
-	clap.attack("Target");
-	
-	std::cout << "\n--- ScavTrap Attack (20 damage) ---" << std::endl;
-	scav3.attack("Target");
+	std::cout << "\n=== Test 3: Guard Gate Special Ability ===" << std::endl;
+	scav1.guardGate();
 
-	std::cout << "\n\n=== Testing Energy Depletion on ScavTrap ===" << std::endl;
-	ScavTrap scav4("ST-004");
-	std::cout << "Attacking 50 times to deplete energy..." << std::endl;
-	for (int i = 0; i < 50; i++) {
-		scav4.attack("Dummy");
-	}
-	std::cout << "\n--- Trying to attack with no energy ---" << std::endl;
-	scav4.attack("Target");
-	scav4.beRepaired(5);
+	std::cout << "\n=== Test 4: Take Damage and Repair ===" << std::endl;
+	scav1.takeDamage(40);
+	scav1.beRepaired(20);
 
-	std::cout << "\n\n=== Testing Copy Constructor ===" << std::endl;
-	ScavTrap scav5("ST-005");
+	std::cout << "\n=== Test 5: ClapTrap vs ScavTrap ===" << std::endl;
+	ClapTrap clap("Clappy");
+	ScavTrap scav2("Scavvy");
+	clap.attack("target");
+	scav2.attack("target");
+
+	std::cout << "\n=== Test 6: Energy Depletion ===" << std::endl;
+	ScavTrap scav3("Exhausted");
+	for (int i = 0; i < 50; i++)
+		scav3.attack("dummy");
+	scav3.attack("should fail");
+	scav3.beRepaired(1);
+
+	std::cout << "\n=== Test 7: Death ===" << std::endl;
+	ScavTrap scav4("Mortal");
+	scav4.takeDamage(100);
+	scav4.attack("should fail");
+	scav4.guardGate();
+
+	std::cout << "\n=== Test 8: Copy Constructor ===" << std::endl;
+	ScavTrap scav5("Original");
 	ScavTrap scav6(scav5);
-	
-	std::cout << "\n=== Testing Copy Assignment ===" << std::endl;
-	ScavTrap scav7("ST-007");
-	scav7 = scav5;
 
-	std::cout << "\n\n=== Destroying All Objects ===" << std::endl;
+	std::cout << "\n=== Test 9: Assignment Operator ===" << std::endl;
+	ScavTrap scav7("First");
+	ScavTrap scav8("Second");
+	scav8 = scav7;
+
+	std::cout << "\n=== Destruction ===" << std::endl;
 	return 0;
 }
