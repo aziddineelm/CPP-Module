@@ -20,12 +20,10 @@ class AForm {
 		AForm(std::string name, int gradeToSign, int gradeToExecute);
 		AForm(const AForm& other);
 		AForm& operator=(const AForm& other);
-		~AForm();
-
+		virtual ~AForm();
 		// getters
 		std::string getName() const;
-		bool isSigned() const;
-		int getGradeToSign() const;
+		bool isSigned() const;		int getGradeToSign() const;
 		int getGradeToExecute() const;
 
 		void	beSigned(const Bureaucrat& bureaucrat);
