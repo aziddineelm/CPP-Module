@@ -23,18 +23,22 @@ RobotomyRequestForm& RobotomyRequestForm::operator=(const RobotomyRequestForm& o
 RobotomyRequestForm::~RobotomyRequestForm() {}
 
 void RobotomyRequestForm::execute(Bureaucrat const & executor) const {
-	if (!isSigned())
-		throw FormNotSignedException();
-	if (executor.getGrade() > getGradeToExecute())
-		throw GradeTooLowException();
+    if (!isSigned())
+        throw FormNotSignedException();
+    if (executor.getGrade() > getGradeToExecute())
+        throw GradeTooLowException();
 
-	std::cout << "* drilling noises *" << std::endl;
-	
-	// Use current time as seed for randomization
-	std::srand(std::time(NULL));
-	
-	if (std::rand() % 2 == 0)
-		std::cout << _target << " has been robotomized successfully!" << std::endl;
-	else
-		std::cout << "Robotomy failed on " << _target << "!" << std::endl;
+    std::cout << "* drilling noises *" << std::endl;
+    
+    // Seed only once, at the start of the program
+    static bool isSeeded = false;
+    if (!isSeeded) {
+        std::srand(std::time(NULL));
+        isSeeded = true;
+    }
+    
+    if (std::rand() % 2 == 0)
+        std::cout << _target << " has been robotomized successfully!" << std::endl;
+    else
+        std::cout << "Robotomy failed on " << _target << "!" << std::endl;
 }

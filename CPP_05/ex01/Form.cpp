@@ -25,7 +25,7 @@ Form& Form::operator=(const Form& other) {
 
 Form::~Form() {}
 
-std::string Form::getName() const {
+const std::string& Form::getName() const {
 	return _name;
 }
 
@@ -49,11 +49,11 @@ void Form::beSigned(const Bureaucrat& bureaucrat) {
 }
 
 const char* Form::GradeTooHighException::what() const throw() {
-	return "Form grade is too high! Maximum grade is 1.";
+	return "Grade is too high!";
 }
 
 const char* Form::GradeTooLowException::what() const throw() {
-	return "Form grade is too low! Minimum grade is 150.";
+	return "Grade is too low!";
 }
 
 std::ostream& operator<<(std::ostream& out, const Form& form) {

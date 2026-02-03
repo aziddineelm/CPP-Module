@@ -22,7 +22,7 @@ class AForm {
 		AForm& operator=(const AForm& other);
 		virtual ~AForm();
 		// getters
-		std::string getName() const;
+		const std::string& getName() const;
 		bool isSigned() const;		int getGradeToSign() const;
 		int getGradeToExecute() const;
 

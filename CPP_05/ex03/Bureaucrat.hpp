@@ -16,8 +16,9 @@ class Bureaucrat {
 		Bureaucrat (const Bureaucrat& other);
 		Bureaucrat& operator=(const Bureaucrat& other);
 		~Bureaucrat();
-	// Getters
-		std::string getName() const;
+		
+		// Getters
+		const std::string& getName() const;
 		int getGrade() const;
 		void incrementGrade();
 		void decrementGrade();

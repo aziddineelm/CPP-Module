@@ -25,7 +25,7 @@ AForm& AForm::operator=(const AForm& other) {
 
 AForm::~AForm() {}
 
-std::string AForm::getName() const {
+const std::string& AForm::getName() const {
 	return _name;
 }
 
@@ -49,11 +49,11 @@ void AForm::beSigned(const Bureaucrat& bureaucrat) {
 }
 
 const char* AForm::GradeTooHighException::what() const throw() {
-	return "Form grade is too high! Maximum grade is 1.";
+	return "Grade is too high!";
 }
 
 const char* AForm::GradeTooLowException::what() const throw() {
-	return "Form grade is too low! Minimum grade is 150.";
+	return "Grade is too low!";
 }
 
 const char* AForm::FormNotSignedException::what() const throw() {
