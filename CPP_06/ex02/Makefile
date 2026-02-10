@@ -1,25 +1,33 @@
-NAME = identify
+GREEN 	= \033[1;32m
+YELLOW 	= \033[1;33m
+RED 	= \033[1;31m
+RESET 	= \033[0m
 
-CXX = c++
-CXXFLAGS = -Wall -Wextra -Werror -std=c++98
+CXX 		= c++
 
-SRCS = main.cpp Base.cpp functions.cpp
-OBJS = $(SRCS:.cpp=.o)
+CXXFLAGS	= -Wall -Wextra -Werror -std=c++98
+
+NAME 		= Bureaucrat
+
+SRCS 		= main.cpp Base.cpp functions.cpp
+
+OBJS 		= $(SRCS:.cpp=.o)
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CXX) $(CXXFLAGS) $(OBJS) -o $(NAME)
+	@$(CXX) $(CXXFLAGS) -o $(NAME) $(OBJS)
+	@echo "$(GREEN)$(NAME) compiled successfully!$(RESET)"
 
 %.o: %.cpp
-	$(CXX) $(CXXFLAGS) -c $< -o $@
+	@$(CXX) $(CXXFLAGS) -c $< -o $@
 
 clean:
-	rm -f $(OBJS)
+	@rm -f $(OBJS)
+	@echo "$(YELLOW)Object files cleaned$(RESET)"
 
 fclean: clean
-	rm -f $(NAME)
+	@rm -f $(NAME)
+	@echo "$(RED)$(NAME) cleaned successfully!$(RESET)"
 
 re: fclean all
-
-.PHONY: all clean fclean re
