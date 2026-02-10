@@ -7,7 +7,7 @@ CXX 		= c++
 
 CXXFLAGS	= -Wall -Wextra -Werror -std=c++98
 
-NAME 		= Bureaucrat
+NAME 		= convert
 
 SRCS 		= main.cpp ScalarConverter.cpp
 
