@@ -48,22 +48,5 @@ int main() {
 	}
 	std::cout << std::endl;
 
-	// Additional test with different data
-	std::cout << "=== Additional Test ===" << std::endl;
-	Data secondData;
-	secondData.name = "SecondObject";
-	secondData.value = -100;
-	secondData.coefficient = 2.71828;
-	secondData.isActive = false;
-	secondData.category = 'Z';
-
-	uintptr_t serialized2 = Serializer::serialize(&secondData);
-	Data* deserialized2 = Serializer::deserialize(serialized2);
-
-	std::cout << "Original address:     " << &secondData << std::endl;
-	std::cout << "Deserialized address: " << deserialized2 << std::endl;
-	std::cout << "Match: " << (deserialized2 == &secondData ? "✓ Yes" : "✗ No") << std::endl;
-	std::cout << "Accessed value: " << deserialized2->value << std::endl;
-
 	return 0;
 }
