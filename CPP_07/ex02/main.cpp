@@ -30,8 +30,8 @@ int main(void)
 		std::cout << copyArr[i] << " ";
 	std::cout << std::endl;
 
-	copyArr[0] = 999;
-	std::cout << "After modifying copy[0] = 999:" << std::endl;
+	copyArr[0] = 1337;
+	std::cout << "After modifying copy[0] = 1337:" << std::endl;
 	std::cout << "Original[0]: " << intArr[0] << std::endl;
 	std::cout << "Copy[0]: " << copyArr[0] << std::endl;
 
@@ -40,8 +40,8 @@ int main(void)
 	assignArr = intArr;
 	std::cout << "Assigned array size: " << assignArr.getSize() << std::endl;
 	
-	assignArr[0] = 777;
-	std::cout << "After modifying assignArr[0] = 777:" << std::endl;
+	assignArr[0] = 1337;
+	std::cout << "After modifying assignArr[0] = 1337:" << std::endl;
 	std::cout << "Original[0]: " << intArr[0] << std::endl;
 	std::cout << "Assigned[0]: " << assignArr[0] << std::endl;
 
