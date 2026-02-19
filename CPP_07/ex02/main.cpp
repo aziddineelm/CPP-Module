@@ -2,114 +2,75 @@
 #include <string>
 #include "Array.hpp"
 
-static void printSeparator(const std::string& label) {
-	std::cout << "\n─── " << label << " ───────────────────────────────────\n";
-}
-
-static void testDefaultConstructor() {
-	printSeparator("Default constructor");
-
-	Array<int> empty;
-	std::cout << "Size of empty array: " << empty.size() << "\n";
-}
-
-static void testParameterizedConstructor() {
-	printSeparator("Parameterized constructor");
-
-	Array<int> ints(5);
-	std::cout << "Size: " << ints.size() << "\n";
-	std::cout << "Default-initialised elements (all zeros expected):\n";
-	for (unsigned int i = 0; i < ints.size(); i++)
-	std::cout << "  ints[" << i << "] = " << ints[i] << "\n";
-}
-
-static void testWriteAndRead() {
-	printSeparator("Write & read elements");
-
-	Array<std::string> words(3);
-	words[0] = "hello";
-	words[1] = "world";
-	words[2] = "!";
-
-	for (unsigned int i = 0; i < words.size(); i++)
-	std::cout << "  words[" << i << "] = " << words[i] << "\n";
-}
-
-static void testDeepCopy() {
-	printSeparator("Deep copy (copy constructor + assignment)");
-
-	// ── copy constructor ──
-	Array<int> original(4);
-	for (unsigned int i = 0; i < original.size(); i++)
-	original[i] = static_cast<int>(i * 10);
-
-	Array<int> copyConstructed(original);
-	copyConstructed[0] = 999;   // must NOT affect original
-
-	std::cout << "original[0]        = " << original[0]        << " (expected 0)\n";
-	std::cout << "copyConstructed[0] = " << copyConstructed[0] << " (expected 999)\n";
-
-	// ── assignment operator ──
-	Array<int> assigned;
-	assigned = original;
-	assigned[1] = 888;          // must NOT affect original
-
-	std::cout << "original[1]        = " << original[1]        << " (expected 10)\n";
-	std::cout << "assigned[1]        = " << assigned[1]        << " (expected 888)\n";
-
-	// ── self-assignment ──
-	Array<int>* ptr = &assigned;
-	assigned = *ptr;    // indirect self-assign to silence -Wself-assign warning
-	std::cout << "Self-assignment: assigned[1] = " << assigned[1] << " (still 888)\n";
-}
-
-static void testConstArray() {
-	printSeparator("Const array (read-only access)");
-
-	Array<double> tmp(3);
-	tmp[0] = 1.1; tmp[1] = 2.2; tmp[2] = 3.3;
-
-	const Array<double> constArr(tmp);
-	for (unsigned int i = 0; i < constArr.size(); i++)
-	std::cout << "  constArr[" << i << "] = " << constArr[i] << "\n";
-}
-
-static void testOutOfBounds() {
-	printSeparator("Out-of-bounds exception");
-
-	Array<int> arr(3);
-	// ── index too high ──
-	try
-	{
-		arr[5];
-		std::cout << "ERROR: no exception thrown!\n";
-	}
-	catch (const std::exception& e)
-	{
-		std::cout << "Caught (index 5 on size-3 array): " << e.what() << "\n";
-	}
-	// ── empty array ──
-	try
-	{
-		Array<int> empty;
-		empty[0];
-		std::cout << "ERROR: no exception thrown!\n";
-	}
-		catch (const std::exception& e)
-	{
-		std::cout << "Caught (index 0 on empty array): " << e.what() << "\n";
-	}
-}
-
-int main()
+int main(void)
 {
-	testDefaultConstructor();
-	testParameterizedConstructor();
-	testWriteAndRead();
-	testDeepCopy();
-	testConstArray();
-	testOutOfBounds();
+	std::cout << "=== Default constructor (empty array) ===" << std::endl;
+	Array<int> empty;
+	std::cout << "Size: " << empty.getSize() << std::endl;
 
-	std::cout << "\n";
+	std::cout << "\n=== Parameterized constructor ===" << std::endl;
+	Array<int> intArr(5);
+	std::cout << "Size: " << intArr.getSize() << std::endl;
+	std::cout << "Default values: ";
+	for (unsigned int i = 0; i < intArr.getSize(); i++)
+		std::cout << intArr[i] << " ";
+	std::cout << std::endl;
+
+	std::cout << "\n=== Assigning values ===" << std::endl;
+	for (unsigned int i = 0; i < intArr.getSize(); i++)
+		intArr[i] = (i + 1) * 10;
+	for (unsigned int i = 0; i < intArr.getSize(); i++)
+		std::cout << intArr[i] << " ";
+	std::cout << std::endl;
+
+	std::cout << "\n=== Copy constructor (deep copy) ===" << std::endl;
+	Array<int> copyArr(intArr);
+	std::cout << "Copy: ";
+	for (unsigned int i = 0; i < copyArr.getSize(); i++)
+		std::cout << copyArr[i] << " ";
+	std::cout << std::endl;
+
+	copyArr[0] = 999;
+	std::cout << "After modifying copy[0] = 999:" << std::endl;
+	std::cout << "Original[0]: " << intArr[0] << std::endl;
+	std::cout << "Copy[0]: " << copyArr[0] << std::endl;
+
+	std::cout << "\n=== Assignment operator (deep copy) ===" << std::endl;
+	Array<int> assignArr(2);
+	assignArr = intArr;
+	std::cout << "Assigned array size: " << assignArr.getSize() << std::endl;
+	
+	assignArr[0] = 777;
+	std::cout << "After modifying assignArr[0] = 777:" << std::endl;
+	std::cout << "Original[0]: " << intArr[0] << std::endl;
+	std::cout << "Assigned[0]: " << assignArr[0] << std::endl;
+
+	std::cout << "\n=== Out of bounds exception ===" << std::endl;
+	try {
+		std::cout << intArr[100] << std::endl;
+	} catch (std::exception &e) {
+		std::cout << "Exception: " << e.what() << std::endl;
+	}
+
+	std::cout << "\n=== Access on empty array ===" << std::endl;
+	try {
+		std::cout << empty[0] << std::endl;
+	} catch (std::exception &e) {
+		std::cout << "Exception: " << e.what() << std::endl;
+	}
+
+	std::cout << "\n=== Const array test ===" << std::endl;
+	const Array<int> constArr(intArr);
+	std::cout << "Const array [0]: " << constArr[0] << std::endl;
+
+	std::cout << "\n=== String array ===" << std::endl;
+	Array<std::string> strArr(3);
+	strArr[0] = "Hello";
+	strArr[1] = "World";
+	strArr[2] = "42";
+	for (unsigned int i = 0; i < strArr.getSize(); i++)
+		std::cout << strArr[i] << " ";
+	std::cout << std::endl;
+
 	return 0;
 }

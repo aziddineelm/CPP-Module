@@ -1,59 +1,59 @@
 #include <iostream>
 #include <string>
+#include <cctype>
 #include "iter.hpp"
 
-void	printInt(int const &n)
-{
-	std::cout << n << std::endl;
+template <typename T>
+void printElement(T const &element) {
+    std::cout << element << " ";
 }
 
-void	printString(std::string const &s)
-{
-	std::cout << s << std::endl;
+template <typename T>
+void increment(T &element) {
+    element++;
 }
 
-void	doubleIt(int &n)
-{
-	n *= 2;
+void toUpper(std::string &str) {
+    for (size_t i = 0; i < str.length(); i++) {
+        str[i] = static_cast<char>(std::toupper(str[i]));
+    }
 }
 
-void	toUpper(std::string &s)
-{
-	for (size_t i = 0; i < s.size(); i++)
-		s[i] = static_cast<char>(std::toupper(s[i]));
-}
+int main(void) {
+    std::cout << "=== Int array ===" << std::endl;
+    int numbers[] = {42, 84, 16};
+    ::iter(numbers, 3, printElement<int>);
+    std::cout << std::endl;
 
-int	main(void)
-{
-	// --- Test with int array (non-const) ---
-	std::cout << "=== int array ===" << std::endl;
-	int	intArr[] = {1, 2, 3, 4, 5};
-	iter(intArr, 5, printInt);
+    std::cout << "\n=== After increment ===" << std::endl;
+    ::iter(numbers, 3, increment<int>);
+    ::iter(numbers, 3, printElement<int>);
+    std::cout << std::endl;
 
-	// --- Test mutation via non-const reference ---
-	std::cout << "=== int array after doubling ===" << std::endl;
-	iter(intArr, 5, doubleIt);
-	iter(intArr, 5, printInt);
+    std::cout << "\n=== String array ===" << std::endl;
+    std::string words[] = {"apple", "banana", "cherry", "date"};
+    ::iter(words, 4, printElement<std::string>);
+    std::cout << std::endl;
 
-	// --- Test with const int array ---
-	std::cout << "=== const int array ===" << std::endl;
-	int const	constArr[] = {10, 20, 30};
-	iter(constArr, 3, printInt);
+    std::cout << "\n=== After toUpper ===" << std::endl;
+    ::iter(words, 4, toUpper);
+    ::iter(words, 4, printElement<std::string>);
+    std::cout << std::endl;
 
-	// --- Test with std::string array ---
-	std::cout << "=== string array ===" << std::endl;
-	std::string	strArr[] = {"hello", "world", "cpp07"};
-	iter(strArr, 3, printString);
+    std::cout << "\n=== Const int array ===" << std::endl;
+    int const readOnlyNums[] = {100, 200, 300};
+    ::iter(readOnlyNums, 3, printElement<int const>);
+    std::cout << std::endl;
 
-	// --- Test mutation on string array ---
-	std::cout << "=== string array after toUpper ===" << std::endl;
-	iter(strArr, 3, toUpper);
-	iter(strArr, 3, printString);
+    std::cout << "\n=== Double array ===" << std::endl;
+    double decimals[] = {4.2, 8.4, 16.8};
+    ::iter(decimals, 3, printElement<double>);
+    std::cout << std::endl;
 
-	// --- Test with const string array ---
-	std::cout << "=== const string array ===" << std::endl;
-	std::string const	constStrArr[] = {"foo", "bar", "baz"};
-	iter(constStrArr, 3, printString);
+    std::cout << "\n=== Char array ===" << std::endl;
+    char letters[] = {'q', 'w', 'e', 'r'};
+    ::iter(letters, 4, printElement<char>);
+    std::cout << std::endl;
 
-	return 0;
+    return 0;
 }
