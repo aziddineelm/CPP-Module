@@ -1,3 +1,4 @@
+#include <climits>
 #include <iostream>
 #include <vector>
 #include <list>
@@ -121,6 +122,21 @@ int main() {
 		}
 		std::cout << "Shortest span: " << sp.shortestSpan() << std::endl;
 		std::cout << "Longest span:  " << sp.longestSpan() << std::endl;
+	}
+
+	std::cout << "Test INT_MAX and INT_MIN" << std::endl;
+	{
+		Span max_min(2);
+		std::vector<int> max;
+		max.push_back(INT_MAX);
+		max.push_back(INT_MIN);
+		try {
+			max_min.addRange(max.begin(), max.end());
+		} catch (std::exception& e) {
+			std::cout << e.what() << std::endl;
+		}
+		std::cout << "Shortest Span: " << max_min.shortestSpan() << std::endl;
+		std::cout << "Longest Span: " << max_min.longestSpan() << std::endl;
 	}
 
 	return 0;

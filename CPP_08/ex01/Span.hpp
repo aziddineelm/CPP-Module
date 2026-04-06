@@ -22,8 +22,8 @@ public:
 	template <typename InputIterator>
 	void	addRange(InputIterator begin, InputIterator end);
 
-	int		shortestSpan() const;
-	int		longestSpan() const;
+	long long		shortestSpan() const;
+	long long		longestSpan() const;
 
 	class SpanFullException : public std::exception {
 	public:
