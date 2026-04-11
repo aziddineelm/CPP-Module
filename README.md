@@ -2,11 +2,11 @@
 
 A progressive journey through **C++98** fundamentals to advanced concepts, spanning **10 modules** and **30+ exercises**. Each module introduces new features of the language while building on the foundations of previous ones.
 
+> All code is compiled with `c++ -Wall -Wextra -Werror -std=c++98` and follows the **Orthodox Canonical Form** where required.
+
 ![Language](https://img.shields.io/badge/Language-C-blue)
 ![42 Project](https://img.shields.io/badge/42-Project-orange)
 ![Status](https://img.shields.io/badge/Status-Completed-success)
-
-> All code is compiled with `c++ -Wall -Wextra -Werror -std=c++98` and follows the **Orthodox Canonical Form** where required.
 
 ---
 
