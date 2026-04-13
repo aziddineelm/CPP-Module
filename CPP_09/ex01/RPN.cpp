@@ -1,7 +1,5 @@
 #include "RPN.hpp"
 
-// --- Orthodox Canonical Form ---
-
 RPN::RPN() {}
 
 RPN::RPN(const RPN& other) : _stk(other._stk) {}
@@ -13,8 +11,6 @@ RPN& RPN::operator=(const RPN& other) {
 }
 
 RPN::~RPN() {}
-
-// --- Private helpers ---
 
 bool RPN::isOperator(const std::string& token) const {
 	return (token == "+" || token == "-" || token == "*" || token == "/");
@@ -34,8 +30,6 @@ long RPN::applyOp(long left, long right, const std::string& op) const {
 	}
 	throw std::runtime_error("Error");
 }
-
-// --- Public ---
 
 long RPN::evaluate(const std::string& expression) {
 	std::istringstream	stream(expression);
