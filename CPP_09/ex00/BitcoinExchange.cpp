@@ -1,7 +1,5 @@
 #include "BitcoinExchange.hpp"
 
-// --- Orthodox Canonical Form ---
-
 BitcoinExchange::BitcoinExchange() {}
 
 BitcoinExchange::BitcoinExchange(const std::string& dbPath) {
@@ -18,14 +16,10 @@ BitcoinExchange& BitcoinExchange::operator=(const BitcoinExchange& other) {
 
 BitcoinExchange::~BitcoinExchange() {}
 
-// --- Private helpers ---
-
 bool BitcoinExchange::isDateValid(const std::string& date) const {
-	// Expected format: YYYY-MM-DD  (exactly 10 chars with dashes at pos 4 and 7)
 	if (date.length() != 10 || date[4] != '-' || date[7] != '-')
 		return false;
 
-	// Every other character must be a digit
 	for (int i = 0; i < 10; i++) {
 		if (i == 4 || i == 7)
 			continue;
@@ -40,10 +34,8 @@ bool BitcoinExchange::isDateValid(const std::string& date) const {
 	if (month < 1 || month > 12 || day < 1)
 		return false;
 
-	// Days per month (index 0 unused)
 	int limits[] = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
-	// Leap year adjustment for February
 	bool leap = (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
 	if (leap)
 		limits[2] = 29;
@@ -58,7 +50,6 @@ bool BitcoinExchange::parseValue(const std::string& raw, float& out) const {
 	if (raw.empty())
 		return false;
 
-	// Check for stray characters – allow optional leading minus, digits, one dot
 	bool dotSeen = false;
 	std::string::size_type start = 0;
 	if (raw[0] == '-' || raw[0] == '+')
@@ -77,7 +68,7 @@ bool BitcoinExchange::parseValue(const std::string& raw, float& out) const {
 	}
 
 	char* end;
-	out = std::strtof(raw.c_str(), &end);
+	out = static_cast<float>(std::strtod(raw.c_str(), &end));
 	if (*end != '\0')
 		return false;
 
@@ -85,18 +76,14 @@ bool BitcoinExchange::parseValue(const std::string& raw, float& out) const {
 }
 
 float BitcoinExchange::findRate(const std::string& date) const {
-	// upper_bound returns the first element with key > date
-	// decrementing it gives us the last element with key <= date
 	std::map<std::string, float>::const_iterator it = _rates.upper_bound(date);
 
 	if (it == _rates.begin())
-		return -1; // date is before the earliest entry
+		return -1;
 
 	--it;
 	return it->second;
 }
-
-// --- Public interface ---
 
 void BitcoinExchange::loadDatabase(const std::string& dbPath) {
 	std::ifstream file(dbPath.c_str());
@@ -104,8 +91,9 @@ void BitcoinExchange::loadDatabase(const std::string& dbPath) {
 		throw std::runtime_error("Error: could not open database file.");
 
 	std::string line;
-	// Skip the header line ("date,exchange_rate")
 	std::getline(file, line);
+	if (line != "date,exchange_rate")
+		throw std::runtime_error("Error: invalid database header.");
 
 	while (std::getline(file, line)) {
 		std::string::size_type comma = line.find(',');
@@ -116,8 +104,8 @@ void BitcoinExchange::loadDatabase(const std::string& dbPath) {
 		std::string rateStr = line.substr(comma + 1);
 
 		char* end;
-		float rate = std::strtof(rateStr.c_str(), &end);
-		if (*end == '\0' || *end == '\r')
+		float rate = static_cast<float>(std::strtod(rateStr.c_str(), &end));
+		if (*end == '\0')
 			_rates[date] = rate;
 	}
 	file.close();
@@ -131,11 +119,13 @@ void BitcoinExchange::evaluateInput(const std::string& inputPath) const {
 	}
 
 	std::string line;
-	// Skip the header line ("date | value")
 	std::getline(file, line);
+	if (line != "date | value") {
+		std::cerr << "Error: bad input => " << line << std::endl;
+		return;
+	}
 
 	while (std::getline(file, line)) {
-		// Find the separator " | "
 		std::string::size_type sep = line.find(" | ");
 		if (sep == std::string::npos) {
 			std::cerr << "Error: bad input => " << line << std::endl;
@@ -145,13 +135,11 @@ void BitcoinExchange::evaluateInput(const std::string& inputPath) const {
 		std::string date = line.substr(0, sep);
 		std::string valStr = line.substr(sep + 3);
 
-		// Validate date
 		if (!isDateValid(date)) {
-			std::cerr << "Error: bad input => " << date << std::endl;
+			std::cerr << "Error: bad input => " << line << std::endl;
 			continue;
 		}
 
-		// Parse and validate value
 		float value;
 		if (!parseValue(valStr, value)) {
 			std::cerr << "Error: bad input => " << line << std::endl;
@@ -166,7 +154,6 @@ void BitcoinExchange::evaluateInput(const std::string& inputPath) const {
 			continue;
 		}
 
-		// Lookup the exchange rate
 		float rate = findRate(date);
 		if (rate < 0) {
 			std::cerr << "Error: date too early for database." << std::endl;
