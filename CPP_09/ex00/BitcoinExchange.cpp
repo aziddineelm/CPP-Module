@@ -31,7 +31,7 @@ bool BitcoinExchange::isDateValid(const std::string& date) const {
 	int month = std::atoi(date.substr(5, 2).c_str());
 	int day   = std::atoi(date.substr(8, 2).c_str());
 
-	if (month < 1 || month > 12 || day < 1)
+	if (year < 1 || month < 1 || month > 12 || day < 1)
 		return false;
 
 	int limits[] = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
@@ -92,8 +92,6 @@ void BitcoinExchange::loadDatabase(const std::string& dbPath) {
 
 	std::string line;
 	std::getline(file, line);
-	if (line != "date,exchange_rate")
-		throw std::runtime_error("Error: invalid database header.");
 
 	while (std::getline(file, line)) {
 		std::string::size_type comma = line.find(',');
@@ -103,10 +101,8 @@ void BitcoinExchange::loadDatabase(const std::string& dbPath) {
 		std::string date = line.substr(0, comma);
 		std::string rateStr = line.substr(comma + 1);
 
-		char* end;
-		float rate = static_cast<float>(std::strtod(rateStr.c_str(), &end));
-		if (*end == '\0')
-			_rates[date] = rate;
+		float rate = static_cast<float>(std::strtod(rateStr.c_str(), NULL));
+		_rates[date] = rate;
 	}
 	file.close();
 }
