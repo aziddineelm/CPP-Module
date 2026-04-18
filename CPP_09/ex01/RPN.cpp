@@ -25,10 +25,10 @@ long RPN::applyOp(long left, long right, const std::string& op) const {
 		return left * right;
 	if (op == "/") {
 		if (right == 0)
-			throw std::runtime_error("Error");
+			throw std::runtime_error("Error: Division by zero");
 		return left / right;
 	}
-	throw std::runtime_error("Error");
+	throw std::runtime_error("Error: Invalid operator");
 }
 
 long RPN::evaluate(const std::string& expression) {
@@ -38,7 +38,7 @@ long RPN::evaluate(const std::string& expression) {
 	while (stream >> token) {
 		if (isOperator(token)) {
 			if (_stk.size() < 2)
-				throw std::runtime_error("Error");
+				throw std::runtime_error("Error: Not enough operands for operator");
 
 			long right = _stk.top();
 			_stk.pop();
@@ -48,13 +48,13 @@ long RPN::evaluate(const std::string& expression) {
 			_stk.push(applyOp(left, right, token));
 		} else {
 			if (token.length() != 1 || token[0] < '0' || token[0] > '9')
-				throw std::runtime_error("Error");
+				throw std::runtime_error("Error: Invalid token");
 			_stk.push(token[0] - '0');
 		}
 	}
 
 	if (_stk.size() != 1)
-		throw std::runtime_error("Error");
+		throw std::runtime_error("Error: Invalid expression");
 
 	long result = _stk.top();
 	_stk.pop();
