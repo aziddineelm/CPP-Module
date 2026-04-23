@@ -111,7 +111,9 @@ void PmergeMe::sortVec(std::vector<int>& arr) {
 	std::vector<int> order = jacobsthalOrder(pend.size());
 	for (size_t i = 0; i < order.size(); i++) {
 		int val = pend[order[i]];
-		std::vector<int>::iterator pos = std::lower_bound(chain.begin(), chain.end(), val);
+		int paired_winner = sorted[order[i] + 1].first;
+		std::vector<int>::iterator limit = std::find(chain.begin(), chain.end(), paired_winner);
+		std::vector<int>::iterator pos = std::lower_bound(chain.begin(), limit, val);
 		chain.insert(pos, val);
 	}
 
@@ -172,7 +174,9 @@ void PmergeMe::sortDeq(std::deque<int>& arr) {
 	std::vector<int> order = jacobsthalOrder(pend.size());
 	for (size_t i = 0; i < order.size(); i++) {
 		int val = pend[order[i]];
-		std::deque<int>::iterator pos = std::lower_bound(chain.begin(), chain.end(), val);
+		int paired_winner = sorted[order[i] + 1].first;
+		std::deque<int>::iterator limit = std::find(chain.begin(), chain.end(), paired_winner);
+		std::deque<int>::iterator pos = std::lower_bound(chain.begin(), limit, val);
 		chain.insert(pos, val);
 	}
 

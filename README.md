@@ -286,8 +286,28 @@ A `MutantStack<T>` class that inherits from `std::stack<T>` and exposes **iterat
 42
 ```
 
-### ex02 · PmergeMe *(in progress)*
-Implementation of the **Ford-Johnson merge-insert sort algorithm** using two different containers. Compares performance by measuring and displaying sort times.
+### ex02 · PmergeMe
+`PmergeMe` — sorts a sequence of positive integers using the **Ford-Johnson merge-insert sort** algorithm, implemented with two different containers for performance comparison:
+- Sorts with **`std::vector<int>`** and **`std::deque<int>`** independently
+- Measures and displays execution time (in microseconds) for each container using `clock()`
+- Algorithm steps:
+  1. **Pair** adjacent elements, placing the larger value first
+  2. **Recursively sort** the winners (larger of each pair)
+  3. **Build the main chain** — insert `b1` at the front, followed by all sorted winners
+  4. **Insert pend elements** (`b2, b3, ...`) into the chain using **Jacobsthal-sequence ordering** and **binary search** (`std::lower_bound`) bounded by paired winners to minimize comparisons
+  5. **Insert straggler** (if the input count is odd) via binary search
+- Input validation: rejects non-numeric, negative, zero, and overflow values
+- Displays the sequence before and after sorting
+
+```
+./PmergeMe 3 5 9 7 4
+Before: 3 5 9 7 4
+After:  3 4 5 7 9
+Time to process a range of 5 elements with std::vector : 12.00000 us
+Time to process a range of 5 elements with std::deque  : 8.00000 us
+```
+
+**Key classes:** `PmergeMe` (Orthodox Canonical Form, `jacobsthalOrder()`, `sortVec()`, `sortDeq()`, `parseAndSort()`)
 
 ---
 
